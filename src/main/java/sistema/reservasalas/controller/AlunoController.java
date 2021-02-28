@@ -35,13 +35,13 @@ public class AlunoController {
 
 	@GetMapping("/cadastrar")
 	public String cadastrar(Aluno aluno) {
-		return "/aluno/cadastro";
+		return "aluno/cadastro";
 	}
 
 	@GetMapping("/lista")
 	public String listar(ModelMap model) {
 		model.addAttribute("aluno", alunoService.buscarTodos());
-		return "/aluno/lista";
+		return "aluno/lista";
 	}
 
 	@PostMapping("/salvar")
@@ -89,7 +89,7 @@ public class AlunoController {
 	@GetMapping("/buscar/nome")
 	public String getPorNome(@RequestParam("nome") String nome, ModelMap model) {
 		model.addAttribute("aluno", alunoService.buscarPorNome(nome));
-		return "/aluno/lista";
+		return "aluno/lista";
 	}
 
 	@GetMapping("/buscar/sala")

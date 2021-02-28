@@ -2,8 +2,6 @@ package sistema.reservasalas.service;
 
 import java.util.List;
 
-import javax.servlet.http.HttpServletRequest;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -94,8 +92,8 @@ public class AlunosServiceImpl implements AlunosService {
 	@Transactional(readOnly = true)
 	public void decrementarLotacaoQuandoUsuarioExcluir(Long id) {
 
-		String Cid1 = alunoService.buscarPorId(id).getSala().toString().substring(4);
-		String Cid2 = alunoService.buscarPorId(id).getSala2().toString().substring(4);
+		String Cid1 = alunoService.buscarPorId(id).getSala().toString().replaceAll("[\\D]","");
+		String Cid2 = alunoService.buscarPorId(id).getSala2().toString().replaceAll("[\\D]","");
 
 		Long id1 = Long.parseLong(Cid1);
 		Long id2 = Long.parseLong(Cid2);
