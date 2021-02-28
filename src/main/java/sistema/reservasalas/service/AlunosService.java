@@ -21,4 +21,12 @@ public interface AlunosService {
 	List<Aluno> buscarPorSala(Long id);
 	
 	List<Aluno> buscarPorEspaco(Long id);
+	
+	public void getLocacaoAtual(Long id1, Long id2);
+
+	public void decrementarLotacaoQuandoUsuarioExcluir(Long id);
+
+	public boolean verificaLotacaoSala(Long id1, Long id2);
+
+	void alterarcaoLotacaoDaSala(Aluno sala,Long id1, Long id2);
 }

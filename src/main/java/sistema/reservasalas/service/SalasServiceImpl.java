@@ -48,5 +48,4 @@ public class SalasServiceImpl implements SalasService {
 	public List<Sala> buscarTodos() {
 		return dao.findAll();
 	}
-
 }

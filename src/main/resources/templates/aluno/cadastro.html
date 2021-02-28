@@ -64,7 +64,7 @@
 
 
 					<div class="form-group col-md-6">
-						<label for="cargo">Sala segunda etapa</label> <select id="sala"
+						<label for="cargo">Sala segunda etapa</label> <select id="sala2"
 							class="form-control" th:field="*{sala2}">
 							<option value="">Selecione...</option>
 							<option th:each="s : ${sala}" th:value="${s.id}"
@@ -74,7 +74,7 @@
 					</div>
 
 					<div class="form-group col-md-6">
-						<label for="cargo">Espaço de café</label> <select id="sala"
+						<label for="cargo">Espaço de café</label> <select id="espaco"
 							class="form-control" th:field="*{espaco}">
 							<option value="">Selecione...</option>
 							<option th:each="e : ${espaco}" th:value="${e.id}"

@@ -16,7 +16,4 @@ public interface SalasService {
 	
 	List<Sala> buscarTodos();
 	
-	
-	
-
 }

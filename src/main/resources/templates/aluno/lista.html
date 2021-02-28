@@ -5,6 +5,7 @@
 </head>
 <body>
 
+
 	<section class="layout-content" layout:fragment="corpo">
 		<nav class="navbar navbar-expand-md bg-light">
 			<div class="collapse navbar-collapse" id="navbarsExampleDefault">
@@ -59,7 +60,7 @@
 								th:action="@{/aluno/buscar/sala}">
 								<select class="form-control mr-sm-2" th:name="id"
 									aria-label="Search">
-									<option value="">Cargo</option>
+									<option value="">Sala</option>
 									<option th:each="s : ${sala}" th:value="${s.id}"
 										th:text="${s.nome}">Sala</option>
 								</select>

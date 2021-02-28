@@ -50,7 +50,7 @@ public class SalaController {
 		return "redirect:/sala/cadastrar";
 	}
 	
-	@GetMapping("/exlcuir")
+	@GetMapping("/excluir/{id}")
 	public String excluir(@PathVariable("id") Long id, RedirectAttributes attr) {
 		salaService.excluir(id);
 		attr.addFlashAttribute("success","Sala exluida com sucesso!");

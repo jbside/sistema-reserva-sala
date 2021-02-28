@@ -29,7 +29,7 @@ public class AlunoController {
 
 	@Autowired
 	private SalasService salaService;
-	
+
 	@Autowired
 	private EspacoService espacoService;
 
@@ -45,9 +45,17 @@ public class AlunoController {
 	}
 
 	@PostMapping("/salvar")
-	public String salvar(Aluno aluno, RedirectAttributes attr) {
-		alunoService.salvar(aluno);
-		attr.addFlashAttribute("success", "Aluno salvo com sucesso!");
+	public String salvar(Aluno aluno, RedirectAttributes attr, @RequestParam("sala") Long id1,
+			@RequestParam("sala2") Long id2) {
+
+		if (alunoService.verificaLotacaoSala(id1, id2)) {
+			alunoService.getLocacaoAtual(id1, id2);
+			alunoService.salvar(aluno);
+			attr.addFlashAttribute("success", "Aluno salvo com sucesso!");
+		} else {
+			attr.addFlashAttribute("fail", "A sala escolhida está com a lotação cheia, favor escolher outra sala");
+		}
+
 		return "redirect:/aluno/cadastrar";
 	}
 
@@ -58,14 +66,21 @@ public class AlunoController {
 	}
 
 	@PostMapping("/editar")
-	public String editar(Aluno aluno, RedirectAttributes attr) {
-		alunoService.editar(aluno);
-		attr.addFlashAttribute("success", "Aluno editado com sucesso!");
-		return ("aluno/cadastro");
+	public String editar(Aluno aluno, RedirectAttributes attr, @RequestParam("sala") Long id1,
+			@RequestParam("sala2") Long id2) {
+		if (alunoService.verificaLotacaoSala(id1, id2)) {
+			alunoService.alterarcaoLotacaoDaSala(aluno, id1, id2);
+			alunoService.editar(aluno);
+			attr.addFlashAttribute("success", "Aluno editado com sucesso!");
+		} else {
+			attr.addFlashAttribute("fail", "A sala escolhida está com a lotação cheia, favor escolher outra sala");
+		}
+		return "redirect:/aluno/cadastrar";
 	}
 
 	@GetMapping("/excluir/{id}")
 	public String exlcuir(@PathVariable("id") Long id, RedirectAttributes attr) {
+		alunoService.decrementarLotacaoQuandoUsuarioExcluir(id);
 		alunoService.excluir(id);
 		attr.addFlashAttribute("success", "Aluno excluido com sucesso");
 		return "redirect:/aluno/lista";
@@ -93,7 +108,7 @@ public class AlunoController {
 	public List<Sala> listaSalas() {
 		return salaService.buscarTodos();
 	}
-	
+
 	@ModelAttribute("espaco")
 	public List<Espaco> listaEspacos() {
 		return espacoService.buscarTodos();
