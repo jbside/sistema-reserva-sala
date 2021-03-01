@@ -16,6 +16,9 @@ public class SalasServiceImpl implements SalasService {
 	@Autowired
 	private SalaDao dao;
 	
+	@Autowired
+	private SalasService salaService;
+	
 	@Transactional(readOnly = false)
 	@Override
 	public void salvar(Sala sala) {
@@ -48,4 +51,20 @@ public class SalasServiceImpl implements SalasService {
 	public List<Sala> buscarTodos() {
 		return dao.findAll();
 	}
+	
+	
+	// Metodo que verificar sem algum campo está vazio
+	
+	@Override
+	@Transactional(readOnly = true)
+	public boolean tratarEntradaDeDados(String nome, int lotacao) {
+		if (nome.equals("") || lotacao < 0) {
+			return true;
+		} else {
+
+			return false;
+		}
+		
+	}
+		
 }

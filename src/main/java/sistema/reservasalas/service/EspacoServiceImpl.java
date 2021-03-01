@@ -15,7 +15,7 @@ public class EspacoServiceImpl implements EspacoService {
 
 	@Autowired
 	private EspacoDao dao;
-	
+
 	@Transactional(readOnly = false)
 	@Override
 	public void salvar(Espaco espaco) {
@@ -31,7 +31,7 @@ public class EspacoServiceImpl implements EspacoService {
 	@Transactional(readOnly = false)
 	@Override
 	public void excluir(Long id) {
-		dao.delete(id);	
+		dao.delete(id);
 	}
 
 	@Override
@@ -45,5 +45,19 @@ public class EspacoServiceImpl implements EspacoService {
 	public List<Espaco> buscarTodos() {
 		return dao.findAll();
 	}
+	
+	// Metodo que verificar sem algum campo está vazio
+	
+	@Override
+	@Transactional(readOnly = true)
+	public boolean tratarEntradas(String nome) {
+		if (nome.equals("")) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+
+	
 
 }

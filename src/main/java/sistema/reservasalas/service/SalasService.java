@@ -15,5 +15,7 @@ public interface SalasService {
 	Sala buscarPorId(Long id);
 	
 	List<Sala> buscarTodos();
+
+	boolean tratarEntradaDeDados(String nome, int lotacao);
 	
 }

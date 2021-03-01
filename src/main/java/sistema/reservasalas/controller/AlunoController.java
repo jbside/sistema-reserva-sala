@@ -46,9 +46,14 @@ public class AlunoController {
 
 	@PostMapping("/salvar")
 	public String salvar(Aluno aluno, RedirectAttributes attr, @RequestParam("sala") Long id1,
-			@RequestParam("sala2") Long id2) {
-
-		if (alunoService.verificaLotacaoSala(id1, id2)) {
+			@RequestParam("sala2") Long id2, @RequestParam("nome") String nome,@RequestParam("sobre_nome") String sobrenome,
+			@RequestParam("espaco") Long espaco) {
+		
+		if(alunoService.tratarEntradaDeDados(nome, sobrenome,id1.toString(),id2.toString(),espaco.toString())) {
+			attr.addFlashAttribute("fail", "Todos campos precisam ser preenchidos");
+		}
+		
+		else if (alunoService.verificaLotacaoSala(id1, id2)) {
 			alunoService.getLocacaoAtual(id1, id2);
 			alunoService.salvar(aluno);
 			attr.addFlashAttribute("success", "Aluno salvo com sucesso!");

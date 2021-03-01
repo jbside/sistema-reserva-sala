@@ -6,17 +6,20 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-
 import sistema.reservasalas.beans.Aluno;
 import sistema.reservasalas.dao.AlunoDao;
 
 @Service
 @Transactional(readOnly = true)
 public class AlunosServiceImpl implements AlunosService {
-	
+
 	@Autowired
 	private AlunoDao dao;
 
+	@Autowired
+	EspacoService espacoService;
+
+	
 	@Autowired
 	AlunosService alunoService;
 
@@ -92,8 +95,8 @@ public class AlunosServiceImpl implements AlunosService {
 	@Transactional(readOnly = true)
 	public void decrementarLotacaoQuandoUsuarioExcluir(Long id) {
 
-		String Cid1 = alunoService.buscarPorId(id).getSala().toString().replaceAll("[\\D]","");
-		String Cid2 = alunoService.buscarPorId(id).getSala2().toString().replaceAll("[\\D]","");
+		String Cid1 = alunoService.buscarPorId(id).getSala().toString().replaceAll("[\\D]", "");
+		String Cid2 = alunoService.buscarPorId(id).getSala2().toString().replaceAll("[\\D]", "");
 
 		Long id1 = Long.parseLong(Cid1);
 		Long id2 = Long.parseLong(Cid2);
@@ -112,7 +115,7 @@ public class AlunosServiceImpl implements AlunosService {
 	}
 
 	// Metodo que verificar se aluno pode reservar a sala se a lotação estiver livre
-	
+
 	@Override
 	@Transactional(readOnly = true)
 	public boolean verificaLotacaoSala(Long id1, Long id2) {
@@ -124,36 +127,54 @@ public class AlunosServiceImpl implements AlunosService {
 			return false;
 		}
 	}
-	
-	//Metodo que altera a lotação atual das salas, caso cadastro do aluno for alterado
+
+	// Metodo que altera a lotação atual das salas, caso cadastro do aluno for
+	// alterado
+
+	@Override
+	@Transactional(readOnly = true)
+	public void alterarcaoLotacaoDaSala(Aluno aluno, Long id1, Long id2) {
+
+		String PidAluno = aluno.getId().toString();
+		Long idAluno = Long.parseLong(PidAluno);
+
+		if (alunoService.buscarPorId(idAluno).getSala().equals(id1)
+				&& alunoService.buscarPorId(idAluno).getSala2().equals(id2)) {
+
+		} else {
+
+			int lotacao = salaService.buscarPorId(id1).getLotacao_atual() + 1;
+			salaService.buscarPorId(id1).setLotacao_atual(lotacao);
+
+			lotacao = alunoService.buscarPorId(idAluno).getSala().getLotacao_atual() - 1;
+			alunoService.buscarPorId(idAluno).getSala().setLotacao_atual(lotacao);
+
+			lotacao = salaService.buscarPorId(id2).getLotacao_atual() + 1;
+			salaService.buscarPorId(id2).setLotacao_atual(lotacao);
+
+			lotacao = alunoService.buscarPorId(idAluno).getSala2().getLotacao_atual() - 1;
+			alunoService.buscarPorId(idAluno).getSala2().setLotacao_atual(lotacao);
+
+		}
+
+	}
+
+	// Metodo que verificar sem algum campo está vazio
 	
 	@Override
 	@Transactional(readOnly = true)
-	public void alterarcaoLotacaoDaSala(Aluno aluno,Long id1, Long id2) {
+	public boolean tratarEntradaDeDados(String nome, String sobrenome, String sala,String sala2, String espaco) {
 		
-		String PidAluno = aluno.getId().toString();
-		Long idAluno = Long.parseLong(PidAluno);
-		
-		if (alunoService.buscarPorId(idAluno).getSala().equals(id1) 
-				&& alunoService.buscarPorId(idAluno).getSala2().equals(id2)){
-			
+
+		if(nome.equals("") || sobrenome.equals("") || sala.contains("null")   || sala2.contains("null") 
+				|| espaco.contains("null")) {
+			return true;
 		} else {
-			
-			int lotacao = salaService.buscarPorId(id1).getLotacao_atual() + 1;
-			salaService.buscarPorId(id1).setLotacao_atual(lotacao);
-			
-			lotacao = alunoService.buscarPorId(idAluno).getSala().getLotacao_atual() - 1;
-			alunoService.buscarPorId(idAluno).getSala().setLotacao_atual(lotacao);
-			
-			lotacao = salaService.buscarPorId(id2).getLotacao_atual() + 1;
-			salaService.buscarPorId(id2).setLotacao_atual(lotacao);
-			
-			lotacao = alunoService.buscarPorId(idAluno).getSala2().getLotacao_atual() -1;
-			alunoService.buscarPorId(idAluno).getSala2().setLotacao_atual(lotacao);
-			
+		
+		return false;
 		}
-		
-		
 	}
+
+	
 
 }

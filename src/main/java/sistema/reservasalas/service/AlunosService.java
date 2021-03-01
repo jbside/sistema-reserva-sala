@@ -29,4 +29,6 @@ public interface AlunosService {
 	public boolean verificaLotacaoSala(Long id1, Long id2);
 
 	void alterarcaoLotacaoDaSala(Aluno sala,Long id1, Long id2);
+
+	boolean tratarEntradaDeDados(String nome, String sobrenome, String sala, String sala2, String espaco);
 }

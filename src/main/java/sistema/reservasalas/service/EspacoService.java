@@ -16,4 +16,6 @@ public interface EspacoService {
 	
 	List<Espaco> buscarTodos();
 
+	boolean tratarEntradas(String nome);
+
 }
