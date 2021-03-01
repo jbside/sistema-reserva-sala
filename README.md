@@ -70,6 +70,10 @@ Tanto a exclusão quando a edição dos dados, podem ser acessadas pela página 
 2. Da mesma forma, quando algum aluno é excluido, ou muda de sala na edição, a lotação atual é atualizada
 
 
+![](http://logos-vector.com/images/logo/xxl/1/0/7/107942/Java_Duke_a556c_450x450.png)
+
+
+
 # Explorando um pouco do código
 
 Para o desenvolvimento do projeto foi escolhido o padrão MVC, nativo do Spring. Todas funcionalidades foram organizadas em seus respectivos pacotes 
